@@ -1,0 +1,13 @@
+{
+  "name": "rre-ipr25",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "RRE — Early-Stage Venture Capital Partner. Local replica of the Webflow site (rre-staging.webflow.io).",
+  "scripts": {
+    "dev": "node serve.mjs 3000",
+    "build": "node -e 'console.log(\"Build ready\")'",
+    "start": "node serve.mjs 3000",
+    "serve": "node serve.mjs 3000"
+  }
+}

@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Temp / working files
+*.ps1
+_site/

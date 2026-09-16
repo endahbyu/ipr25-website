@@ -1,0 +1,165 @@
+/**
+ * Video.js Intro/Outro Video Plugin Styles
+ */
+
+/* Ensure the video player has relative positioning */
+.video-js {
+  position: relative !important;
+}
+
+.vjs-intro-outro-skip-button {
+  position: absolute !important;
+  z-index: 9999 !important;
+
+  /* Button styling */
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+
+  /* Transitions */
+  transition: all 0.3s ease;
+
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Position: Center (default - right center) */
+.vjs-skip-button-center {
+  top: 50% !important;
+  right: 20px !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Position: Top Left */
+.vjs-skip-button-top-left {
+  top: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* Position: Top Right */
+.vjs-skip-button-top-right {
+  top: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* Position: Bottom Left */
+.vjs-skip-button-bottom-left {
+  bottom: 80px !important;
+  left: 20px !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+/* Position: Bottom Right */
+.vjs-skip-button-bottom-right {
+  bottom: 80px !important;
+  right: 20px !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+.vjs-intro-outro-skip-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.vjs-skip-button-center:hover {
+  transform: translateY(-50%) scale(1.05) !important;
+}
+
+.vjs-skip-button-center:active {
+  transform: translateY(-50%) scale(0.98) !important;
+}
+
+.vjs-skip-button-top-left:hover,
+.vjs-skip-button-top-right:hover,
+.vjs-skip-button-bottom-left:hover,
+.vjs-skip-button-bottom-right:hover {
+  transform: scale(1.05) !important;
+}
+
+.vjs-skip-button-top-left:active,
+.vjs-skip-button-top-right:active,
+.vjs-skip-button-bottom-left:active,
+.vjs-skip-button-bottom-right:active {
+  transform: scale(0.98) !important;
+}
+
+.vjs-intro-outro-skip-button:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vjs-intro-outro-skip-button {
+    right: 15px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vjs-intro-outro-skip-button {
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+
+/* Animation on button appearance */
+@keyframes skipButtonFadeInCenter {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes skipButtonFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.vjs-skip-button-center {
+  animation: skipButtonFadeInCenter 0.3s ease-out;
+}
+
+.vjs-skip-button-top-left,
+.vjs-skip-button-top-right,
+.vjs-skip-button-bottom-left,
+.vjs-skip-button-bottom-right {
+  animation: skipButtonFadeIn 0.3s ease-out;
+}
+
+.vjs-intro-outro-skip-button {
+  margin: 0 !important;
+  display: block !important;
+}

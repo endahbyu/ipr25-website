@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="csrf-token" content="">
+    <link rel="preload" as="image" href="../video/thumbnail.jpg" imagesrcset="../video/thumbnail.jpg">
+
+    <link href="../css/video-js.min.css" rel="stylesheet" />
+    <link href="../css/videojs-intro-video.css" rel="stylesheet" />
+
+    <script src="../js/video.min.js"></script>
+    <script src="../js/silvermine-videojs-quality-selector.min.js"></script>
+    <script src="../js/videojs-hls-quality-selector.min.js"></script>
+    <script src="../js/videojs-intro-video.js"></script>
+
+    <script type="text/javascript" src="../js/player-0.1.0.min.js"></script>
+
+    
+
+    
+    <style>
+        /* Responsive video size */
+        #vidzflow-player {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        #vidzflow-player video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+                    html,
+            body {
+                height: 100% !important;
+            }
+
+            #vidzflow-player {
+                padding-top: 0 !important;
+                height: 100% !important;
+            }
+
+            #vidzflow-player video {
+                object-fit: cover !important;
+                height: 100% !important;
+            }
+
+         #vidzflow-player .vjs-poster img {
+            object-fit: cover !important;
+        }
+
+        
+        .player-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        :root {
+            --playeraccent: #ff0000;
+        }
+
+        body .watermark {
+            position: absolute;
+            z-index: 100;
+        }
+
+        body .watermark img {
+            height: 90px;
+            opacity: .5;
+            transition: .2s ease-in-out;
+        }
+
+        body .watermark:hover img {
+            opacity: 1;
+        }
+
+        body .custom-cta-btn {
+            background-color:
+                #4e5ffd
+            ;
+            padding: 12px;
+            text-decoration: none;
+            transition: .3s ease-in-out;
+            display: flex;
+            gap: 10px;
+            pointer-events: visible;
+        }
+
+        body .cta-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        body .cta-top-right {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 99;
+            opacity: 1;
+            max-width: 60%;
+            display: none;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        body .cta-top-left {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 99;
+            opacity: 1;
+            max-width: 60%;
+            display: none;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        body .cta-bottom-left {
+            position: absolute;
+            bottom: 12%;
+            left: 15px;
+            z-index: 99;
+            opacity: 1;
+            max-width: 60%;
+            display: none;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        body .cta-bottom-right {
+            position: absolute;
+            bottom: 12%;
+            right: 15px;
+            z-index: 99;
+            opacity: 1;
+            max-width: 60%;
+            display: none;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        body .cta-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+            opacity: 1;
+            max-width: 60%;
+            display: none;
+            flex-direction: column;
+            pointer-events: none;
+        }
+
+        body .cta-button-rounded-square{
+            border-radius: 0;
+        }
+
+        body .cta-button-rounded-sm {
+            border-radius: 3px;
+        }
+
+        body .cta-button-rounded-md {
+            border-radius: 6px;
+        }
+
+        body .cta-button-rounded-xl {
+            border-radius: 12px;
+        }
+
+        body .cta-button-rounded-xxl {
+            border-radius: 16px;
+        }
+
+        body .cta-button-rounded-full {
+            border-radius: calc(infinity * 1px);
+        }
+
+        body .show {
+            display: flex;
+        }
+
+        body .custom-cta p {
+            margin: 0;
+            font-weight: 500;
+            line-height: 1;
+            font-size: 16px;
+            color:
+                #ffffff
+            ;
+        }
+
+        body .custom-cta svg path {
+            stroke:
+                #ffffff
+            ;
+        }
+
+        .cta-video-background-transparent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transition: .3s ease-in-out;
+            opacity: 0;
+            z-index: 98;
+            background: #6575e2;
+            pointer-events: none;
+            display: none;
+        }
+
+        .cta-video-background-semi-transparent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transition: .3s ease-in-out;
+            opacity: 0.4;
+            z-index: 98;
+            background: #6575e2;
+            pointer-events: none;
+            display: none;
+        }
+
+        .cta-video-background-non-transparent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transition: .3s ease-in-out;
+            opacity: 1;
+            z-index: 98;
+            background: #6575e2;
+            pointer-events: none;
+            display: none;
+        }
+
+        body .cta-video-overlay {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            pointer-events: none;
+            transition: .3s ease-in-out;
+        }
+
+        body .cta-overlay-content {
+            z-index: 99;
+        }
+
+        body .cta-overlay-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        body .cta-overlay-description {
+            font-size: 1rem;
+            word-break: break-word;
+        }
+
+        body .cta-position-top-left {
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        body .cta-position-top-right {
+            align-items: flex-end;
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        body .cta-position-bottom-left {
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        body .cta-position-bottom-right {
+            align-items: flex-end;
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        body .cta-position-center {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+                    .video-js .vjs-big-play-button,
+            .video-js .vjs-custom-play-button-wrapper,
+            .video-js .vjs-custom-mobile-play-button-wrapper {
+                display: none !important;
+            }
+
+         .video-js .vjs-big-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0 !important;
+            border: 0;
+            z-index: 1;
+            background-color:
+                #4E5FFD
+            ;
+            border-radius: 100px;
+            width: 48px;
+            height: 48px;
+            transition: all 0.3s ease;
+        }
+
+        .video-js .vjs-big-play-button.has-custom {
+            width: unset;
+            height: unset;
+            padding: 7px;
+        }
+        .video-js .vjs-big-play-button.has-custom .vjs-icon-placeholder::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: fit-content;
+            height: fit-content;
+            transform: translate(28%, 0%);
+        }
+
+        .video-js .vjs-custom-play-button-wrapper,
+        .video-js .vjs-custom-mobile-play-button-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 1001;
+            /* Set initial z-index */
+        }
+
+        .end-thumbnail.visible+.video-js .vjs-custom-play-button-wrapper,
+        .end-thumbnail.visible+.video-js .vjs-custom-mobile-play-button-wrapper {
+            z-index: 0;
+            /* Reset z-index when end thumbnail is visible */
+        }
+
+        .video-js:hover .vjs-big-play-button {
+            background-color:
+                #4E5FFD
+            ;
+        }
+
+        .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+            top: 2px;
+        }
+
+        /* Enhanced CSS for chapter markers */
+        .vjs-chapter-marker {
+            position: absolute;
+            bottom: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Create vertical dividers for chapter markers */
+        .vjs-chapter-marker::before,
+        .vjs-chapter-marker::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 3;
+            transition: background-color 0.2s ease;
+        }
+
+        .vjs-chapter-marker::before {
+            left: 0;
+        }
+
+        .vjs-chapter-marker::after {
+            right: 0;
+        }
+
+        /* Hover state */
+        .vjs-chapter-marker:hover {
+            background-color: #4E5FFD;
+            opacity: 0.7;
+            transform: scaleY(1.2);
+        }
+
+        .vjs-chapter-marker:hover::before,
+        .vjs-chapter-marker:hover::after {
+            background-color: white;
+        }
+
+        /* Chapter tooltip */
+        .vjs-chapter-marker .chapter-tooltip {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 10px;
+            line-height: 1.3;
+            letter-spacing: 0.03em;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 5px 10px;
+            background-color: rgba(28, 28, 28, 0.85);
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            pointer-events: none;
+            z-index: 4;
+            max-width: 200px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: normal;
+            font-stretch: normal;
+        }
+
+        /* Show tooltip on hover */
+        .vjs-chapter-marker:hover .chapter-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Ensure hover works on mobile with touch events */
+        @media (hover: none) {
+            .vjs-chapter-marker:active {
+                background-color: #4E5FFD;
+                opacity: 0.7;
+            }
+
+            .vjs-chapter-marker:active .chapter-tooltip {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        /* Make sure the tooltip appears above the control bar */
+        .video-js .vjs-progress-control:hover .vjs-chapter-marker .chapter-tooltip {
+            bottom: 25px;
+        }
+
+        .vjs-menu .vjs-menu-content {
+            border-radius: 4px !important;
+        }
+
+        .video-js .vjs-text-track-display>div>div>div {
+            font-size: 25px !important;
+            line-height: 33px !important;
+            padding: 5px !important;
+            background: transparent !important;
+            text-shadow: 1px 1px 2px #000000;
+            display: inline-block !important;
+        }
+
+        .vjs-control-bar {
+            padding: 2rem 10px 10px 10px;
+            height: auto !important;
+
+                                    visibility: hidden;
+             background-color: transparent !important;
+            align-items: center;
+        }
+
+        /* Custom control layout when progress bar is disabled */
+        .vjs-has-started.vjs-no-progress-bar .vjs-control-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 10px 10px 10px; /* Slightly reduced top padding */
+        }
+
+        .vjs-has-started.vjs-no-progress-bar .vjs-control-bar .vjs-play-control {
+            order: -1; /* Move to the beginning */
+            margin-right: 0; /* Remove any right margin */
+        }
+
+        .vjs-has-started.vjs-no-progress-bar .vjs-control-bar .vjs-custom-control-spacer {
+            display: block;
+            flex-grow: 1;
+            min-width: 10px; /* Ensure minimum spacing */
+        }
+
+        /* Group the right-side controls */
+        .vjs-has-started.vjs-no-progress-bar .vjs-control-bar > :not(.vjs-play-control):not(.vjs-custom-control-spacer) {
+            margin-left: 5px; /* Add spacing between right-side controls */
+        }
+
+        .vjs-play-control {
+            height: 32px !important;
+            width: 32px !important;
+            border-radius: 4px;
+            transition: .3s ease-in-out;
+            background-color: transparent;
+        }
+
+        .vjs-play-control:hover {
+            background-color:
+                #4E5FFD
+            ;
+        }
+
+        .vjs-button>.vjs-icon-placeholder:before {
+            font-size: 30px;
+            line-height: 33px;
+        }
+
+        .vjs-progress-holder {
+            height: 7px !important;
+            background-color: rgba(255, 255, 255, 0.25) !important;
+            border-radius: 100px !important;
+        }
+
+        .video-js .vjs-play-progress {
+            background-color:
+                #4E5FFD
+            ;
+        }
+
+        .video-js .vjs-slider {
+            background-color: rgba(255, 255, 255, 0.25) !important;
+        }
+
+        .video-js .vjs-load-progress div {
+            background-color: rgba(255, 255, 255, 0.25) !important;
+        }
+
+        .vjs-remaining-time-display {
+            font-size: 13px !important;
+        }
+
+        .vjs-mute-control {
+            height: 32px !important;
+        }
+
+        .vjs-mute-control span::before {
+            font-size: 20px !important;
+        }
+
+        .vjs-playback-rate {
+            height: 32px !important;
+        }
+
+        .vjs-fullscreen-control {
+            height: 32px !important;
+        }
+
+        .vjs-chapter-marker {
+            height: 12px !important;
+        }
+
+        .vjs-quality-selector .vjs-menu-button {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .vjs-quality-selector .vjs-icon-placeholder {
+            font-family: "VideoJS";
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .vjs-quality-selector {
+            height: 32px !important;
+        }
+
+        .vjs-quality-selector .vjs-icon-placeholder::before {
+            content: "\f114";
+            font-size: 20px;
+            line-height: 33px;
+        }
+
+        .vjs-quality-changing .vjs-big-play-button {
+            display: none;
+        }
+
+        .vjs-quality-changing .vjs-control-bar {
+            display: -webkit-box;
+            display: flex;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .video-js .vjs-play-progress:before {
+            line-height: .8em;
+        }
+
+        .video-js .vjs-progress-control:hover .vjs-play-progress:before {
+            line-height: .5em;
+        }
+
+         .vjs-custom-play-button-wrapper,
+        .vjs-custom-mobile-play-button-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .vjs-custom-play-button-icon,
+        .vjs-custom-mobile-play-button-icon {
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        /* Video thumbnail styling */
+        .vjs-custom-video-as-thumbnail-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .vjs-custom-video-as-thumbnail-wrapper video {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: fill !important;
+        }
+
+        .vjs-custom-play-button-wrapper.keep-original .vjs-custom-play-button-icon,
+        .vjs-custom-mobile-play-button-wrapper.keep-original .vjs-custom-mobile-play-button-icon {
+            max-width: none;
+            max-height: none;
+            width: auto;
+            height: auto;
+        }
+
+        .vjs-custom-play-button-icon img,
+        .vjs-custom-mobile-play-button-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @media screen and (max-width: 991px) {
+
+            .vjs-custom-play-button-icon,
+            .vjs-custom-mobile-play-button-icon {
+                max-width: 100px;
+                max-height: 100px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+
+            .vjs-custom-play-button-icon,
+            .vjs-custom-mobile-play-button-icon {
+                max-width: 48px;
+                max-height: 48px;
+            }
+        }
+
+         .video-js .vjs-text-track-display {
+            pointer-events: none;
+            position: absolute !important;
+            top: auto !important; bottom: 40px !important; align-items: flex-end !important;
+            left: 0 !important;
+            right: 0 !important;
+            display: flex !important;
+            justify-content: center !important;
+            z-index: 1;
+            transform: none !important;
+        }
+
+        .video-js .vjs-text-track-display>div {
+            width: 100% !important;
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
+
+        .video-js .vjs-text-track-display>div>div {
+            background-color: transparent !important;
+            padding: 0 !important;
+            margin-bottom: 0.5em;
+            display: flex !important;
+            justify-content: center !important;
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+        }
+
+        .video-js .vjs-text-track-display>div>div>div {
+            font-size: 22px !important;
+            line-height: 1.3 !important;
+            text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+            color: #FFFFFF !important;
+            display: inline-block !important;
+            max-width: 90%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+        }
+
+        /* Fullscreen subtitle adjustments */
+        .video-js.vjs-fullscreen .vjs-text-track-display>div>div>div {
+            font-size: 32px !important;
+        }
+
+        /* Keep the chosen placement in fullscreen (with a larger offset) */
+        .video-js.vjs-fullscreen .vjs-text-track-display {
+            top: auto !important; bottom: 60px !important; align-items: flex-end !important;
+        }
+
+        .end-thumbnail.visible+.video-js .vjs-big-play-button {
+            display: none !important;
+        }
+
+        .video-js {
+            background-color:
+                                    #000000
+                                !important;
+        }
+
+        /* End thumbnail styling */
+        .end-thumbnail.visible {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .end-thumbnail.visible img {
+            display: flex;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            object-fit: cover;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .end-thumbnail {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Password protection form styles */
+        .password-protection-form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://cdn.vidzflow.com/../video/thumbnail.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1000;
+        }
+
+        .password-protection-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        .password-form-inner {
+            position: relative;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: white;
+            z-index: 1;
+        }
+
+        .password-form-inner h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .password-form-inner p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        #password-protection-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 320px;
+            background-color: white;
+            border-radius: 50px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        #password-protection-form input[type="password"] {
+            flex-grow: 1;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            background-color: transparent;
+            color: #333;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #password-protection-form input[type="password"]:focus {
+            outline: none;
+        }
+
+        .input-wrapper:focus-within {
+            box-shadow: 0 0 0 2px rgba(78, 95, 253, 0.5);
+        }
+
+        #password-protection-form input[type="password"]::placeholder {
+            color: #999;
+        }
+
+        #password-protection-form button {
+            background-color: transparent;
+            border: none;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #password-protection-form button svg {
+            width: 24px;
+            height: 24px;
+            stroke: #4e5ffd;
+        }
+
+        #password-protection-form button:hover {
+            background-color: rgba(78, 95, 253, 0.1);
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            text-align: center;
+            min-height: 1.25em;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        @media (max-width: 480px) {
+            .password-form-inner h2 {
+                font-size: 1.25rem;
+            }
+
+            .password-form-inner p {
+                font-size: 0.9rem;
+            }
+
+            .input-wrapper {
+                max-width: 280px;
+            }
+
+            #password-protection-form input[type="password"] {
+                font-size: 0.9rem;
+            }
+        }
+
+        .end-thumbnail.visible+.video-js .vjs-big-play-button {
+            display: none !important;
+        }
+
+        .video-js.vjs-fullscreen .vjs-tech {
+            width: 100% !important;
+            height: 100% !important;
+            position: relative;
+            margin: auto;
+        }
+
+        .custom-play-text {
+            padding: 5px 10px 5px 36px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 1;
+            pointer-events: none;
+            line-height: 1.2;
+        }
+
+        /* Advanced Video Form Styling */
+        .video-form {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding-top: 0;
+            padding-bottom: 0;
+
+                            background-color: #1c1c1c;
+                    }
+
+        /* Add a scrolling indicator at the bottom of the form */
+        .video-form::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, rgba(28, 28, 28, 0.8) 0%, rgba(28, 28, 28, 0) 100%);
+            pointer-events: none;
+            z-index: 1002;
+        }
+
+        /* Customize gradient for themed backgrounds */
+        
+        /* Close button */
+        .video-form-close {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1003;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            pointer-events: auto;
+        }
+
+        .video-form-close svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .video-form-close:hover {
+                            background: rgba(255, 255, 255, 0.3);
+                        transform: scale(1.05);
+        }
+
+        /* Form alignment styles */
+        .video-form.align-left {
+            justify-content: flex-start;
+            padding-left: 5%;
+        }
+
+        .video-form.align-right {
+            justify-content: flex-end;
+            padding-right: 5%;
+        }
+
+        .video-form.align-centered {
+            justify-content: center;
+        }
+
+        /* Basic form container styling */
+        .video-form .video-form-inner {
+            position: relative;
+            color: white;
+            max-width: 450px;
+            width: 90%;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            scrollbar-width: thin; /* Firefox - show thin scrollbar */
+            scrollbar-color: rgba(255, 255, 255, 0.5) transparent; /* Firefox scrollbar colors */
+            padding: 20px 20px 40px 20px;
+        }
+
+        .video-form .video-form-inner::-webkit-scrollbar {
+            width: 8px;
+            background: transparent;
+        }
+
+        .video-form .video-form-inner::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .video-form .video-form-inner::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-form .video-form-inner::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+
+        /* Form controls styling */
+        .video-form button[type="submit"] {
+            background-color: #4e5ffd;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            height: 50px;
+            width: 100%;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .video-form button[type="submit"]:hover {
+            opacity: 0.9;
+        }
+
+        .video-form .video-form-inner form {
+            padding: 0;
+            gap: 0 !important;
+        }
+
+        .video-form .video-form-inner form label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+                            color: #FFFFFF;
+                    }
+
+        .video-form .video-form-inner form input,
+        .video-form .video-form-inner form textarea,
+        .video-form .video-form-inner form select {
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+            height: 50px;
+            border: none;
+            color: #333;
+            padding: 1rem;
+            margin-bottom: 16px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .video-form .video-form-inner form textarea {
+            height: 80px;
+            resize: vertical;
+            min-height: 50px;
+            max-height: 120px;
+            padding-top: 12px;
+        }
+
+        .video-form .video-form-inner form select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23666" d="M8 10.5l-4-4h8l-4 4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 48px;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .video-form .video-form-inner form select:focus {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%234e5ffd" d="M8 10.5l-4-4h8l-4 4z"/></svg>');
+        }
+
+        .video-form .video-form-inner form select option {
+            background: white;
+            color: #333;
+            padding: 8px 12px;
+            border: none;
+        }
+
+        .video-form .video-form-inner form input::placeholder,
+        .video-form .video-form-inner form textarea::placeholder {
+            color: #9CA3AF;
+        }
+
+        .video-form .video-form-inner .form {
+            padding: 0;
+        }
+
+        .video-form .video-form-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+                            color: #FFFFFF;
+                    }
+
+        /* Add specific styles for vertical layout title */
+        .video-form.layout-vertical .video-form-header h2 {
+            font-size: 1.4rem;
+            line-height: 1.3;
+        }
+
+        .video-form .video-form-header p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+                            color: #FFFFFF;
+                    }
+
+        /* Add specific styles for vertical layout description */
+        .video-form.layout-vertical .video-form-header p {
+            font-size: 0.95rem;
+        }
+
+        /* Vertical layout styles */
+        .video-form.layout-vertical .video-form-inner {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .video-form.layout-vertical .form {
+            width: 100%;
+        }
+
+        .video-form.layout-vertical .video-form-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-top: 10px;
+        }
+
+        .video-form .thank-you {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            height: 100%;
+        }
+
+        .video-form .thank-you h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+                            color: #FFFFFF;
+                    }
+
+        /* Style for bottom fade effect on scrollable elements */
+        .apply-scroll-fade {
+            mask-image: linear-gradient(to bottom, black calc(100% - 60px), transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 60px), transparent 100%);
+        }
+
+        /* Responsive design for mobile devices */
+        @media (max-width: 768px) {
+            .video-form .video-form-inner {
+                max-width: 95%;
+                padding: 15px 15px 30px 15px;
+            }
+
+            .video-form .video-form-header h2 {
+                font-size: 1.25rem;
+            }
+
+            .video-form .video-form-header p {
+                font-size: 0.9rem;
+            }
+
+            .video-form .video-form-inner form input,
+            .video-form .video-form-inner form textarea,
+            .video-form .video-form-inner form select {
+                font-size: 16px; /* Prevent zoom on iOS */
+                height: 48px;
+            }
+
+            .video-form .video-form-inner form textarea {
+                height: 75px;
+            }
+
+            .video-form button[type="submit"] {
+                height: 48px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-form .video-form-inner {
+                max-width: 100%;
+                padding: 10px 10px 25px 10px;
+            }
+
+            .video-form .video-form-header h2 {
+                font-size: 1.15rem;
+            }
+
+            .video-form .video-form-header p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Focus states for better accessibility */
+        .video-form .video-form-inner form input:focus,
+        .video-form .video-form-inner form textarea:focus,
+        .video-form .video-form-inner form select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 95, 253, 0.3);
+        }
+
+        .video-form button[type="submit"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 95, 253, 0.3);
+        }
+
+        /* Loading state for submit button */
+        .video-form button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Embedded form container styling */
+        .embedded-form-container {
+            width: 100%;
+        }
+
+        .embedded-form-container iframe {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+
+    <script src="../js/ua-parser.min.js"></script>
+
+    <script>
+        // Helper function to parse URL parameters
+        function falseOrArray(val) {
+            return val === 'false' ? false : decodeURIComponent(val).split(',');
+        }
+
+        // Helper function to convert string to boolean
+        function trueFalse(val) {
+            return val === 'true';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const t = urlParams.has('t') ? urlParams.get('t') : 0;
+
+            // Determine controls based on customization settings or defaults
+            const controls =
+                                    urlParams.has('controls') ? falseOrArray(urlParams.get('controls')) : false
+                ;
+
+            // Ensure controls is always an array
+            const controlsArray = Array.isArray(controls) ? controls : [];
+
+            // Map control names to VideoJS control names
+            const controlMappings = {
+                'play-large': null,
+                'play': 'playToggle',
+                'progress': 'progressControl',
+                'current-time': 'remainingTimeDisplay',
+                'volume': 'volumePanel',
+                'fullscreen': 'fullscreenToggle'
+            };
+
+            // Process controls and add settings if needed
+            const updatedControls = controlsArray.reduce((acc, control) => {
+                if (control === 'settings') {
+                                            const settingControls = [];
+                                                                        acc.push(...settingControls);
+                                    } else {
+                    const mappedControl = controlMappings[control] || control;
+                    if (mappedControl) acc.push(mappedControl);
+                }
+                return acc;
+            }, []);
+
+            // Configure VideoJS options
+            var options = {
+                controls: updatedControls.length > 0,
+                autoplay: urlParams.has('ap') ? trueFalse(urlParams.get('ap')) : true,
+                muted: urlParams.has('muted') ? trueFalse(urlParams.get('muted')) : true,
+                preload: 'metadata',
+                loop: urlParams.has('loop') ? trueFalse(urlParams.get('loop')) : true,
+                fluid: true,
+                responsive: true,
+                controlBar: updatedControls.length > 0 ? {
+                    children: updatedControls,
+                } : false,
+                playbackRates: updatedControls.includes('playbackRateMenuButton') ? [0.5, 1, 1.5, 2] : null,
+                playFromStartFullscreen: urlParams.has('play_from_start_fullscreen') ? trueFalse(urlParams.get(
+                    'play_from_start_fullscreen')) : false,
+            };
+
+            if (document.getElementById('password-protection-form')) {
+                const form = document.getElementById('password-protection-form');
+                const errorMessage = form.querySelector('.error-message');
+
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const password = this.querySelector('input[name="password"]').value;
+                    errorMessage.textContent = ''; // Clear previous error messages
+
+                    fetch('https://app.vidzflow.com/videos/tU86pvvwPo/verify-password', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '',
+                        },
+                        body: JSON.stringify({
+                            password: password
+                        }),
+                        credentials: 'include'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('video_access_token_48864', data
+                                    .token);
+                                document.getElementById('password-form').style.display = 'none';
+                                player.show();
+                            } else {
+                                errorMessage.textContent = data.message ||
+                                    'Incorrect password. Please try again.';
+                            }
+                        })
+                        .catch(error => {
+                            errorMessage.textContent = 'An error occurred. Please try again.';
+                        });
+                });
+            }
+
+            // Initialize VideoJS player
+            const player = videojs('vidzflow-player', options, function() {
+                // Check if progress bar is enabled
+                const hasProgressBar = updatedControls.includes('progressControl');
+                if (!hasProgressBar) {
+                    this.addClass('vjs-no-progress-bar');
+
+                    // Add a spacer element for better control layout
+                    const controlBar = this.getChild('controlBar');
+                    if (controlBar) {
+                        // Create a spacer element
+                        const spacer = videojs.dom.createEl('div', {
+                            className: 'vjs-custom-control-spacer'
+                        });
+                        // Insert after play button
+                        const playButton = controlBar.getChild('playToggle');
+                        if (playButton && playButton.el()) {
+                            // Insert the spacer after the play button
+                            const controlBarEl = controlBar.el();
+                            if (controlBarEl) {
+                                controlBarEl.insertBefore(spacer, playButton.el().nextSibling);
+                            }
+                        } else {
+                            const controlBarEl = controlBar.el();
+                            if (controlBarEl) {
+                                controlBarEl.prepend(spacer);
+                            }
+                        }
+                    }
+                }
+
+                
+                
+                // Subtitle consistency improvements
+                this.textTrackSettings.setValues({
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    backgroundOpacity: '0',
+                    edgeStyle: 'raised'
+                });
+                this.textTrackSettings.updateDisplay();
+                // Force subtitle update on fullscreen change
+                const updateSubtitles = () => {
+                    const textTrackDisplay = this.el().querySelector('.vjs-text-track-display');
+                    if (textTrackDisplay) {
+                        textTrackDisplay.style.display = 'none';
+                        setTimeout(() => {
+                            textTrackDisplay.style.display = '';
+                        }, 50);
+                    }
+                };
+                this.on('fullscreenchange', updateSubtitles);
+                // Function to toggle subtitle visibility
+                const toggleSubtitles = (show) => {
+                    const tracks = this.textTracks();
+                    for (let i = 0; i < tracks.length; i++) {
+                        const track = tracks[i];
+                        if (track.kind === 'subtitles' || track.kind === 'captions') {
+                            track.mode = show ? 'showing' : 'hidden';
+                        }
+                    }
+                };
+                // Attach to player for external access
+                this.toggleSubtitles = toggleSubtitles;
+                // Hide subtitles initially
+                toggleSubtitles.call(this, false);
+                // Show subtitles when video starts playing
+                this.on('play', () => {
+                    toggleSubtitles.call(this, true);
+                });
+                // Hide subtitles when video ends
+                this.on('ended', () => {
+                    toggleSubtitles.call(this, false);
+                });
+                // Ensure subtitles are visible when video is embedded or loaded
+                this.on('loadedmetadata', () => {
+                    const tracks = this.textTracks();
+                    for (let i = 0; i < tracks.length; i++) {
+                        const track = tracks[i];
+                        if (track.kind === 'subtitles' || track.kind === 'captions') {
+                            track.mode = 'showing';
+                        }
+                    }
+                    updateSubtitles();
+                });
+                // Additional check for subtitle visibility after play starts
+                this.on('play', () => {
+                    setTimeout(updateSubtitles, 500);
+                });
+                // Reposition subtitles on resize
+                this.on('resize', updateSubtitles);
+
+                // Initialize Player.js adapter
+                if (window.playerjs) {
+                    const vjsPlayer = this;
+                    const receiver = new playerjs.Receiver();
+
+                    // Set up methods
+                    receiver.on('play', () => {
+                        vjsPlayer.play();
+                    });
+
+                    receiver.on('pause', () => {
+                        vjsPlayer.pause();
+                    });
+
+                    receiver.on('getPaused', (callback) => {
+                        callback(vjsPlayer.paused());
+                    });
+
+                    receiver.on('getCurrentTime', (callback) => {
+                        callback(vjsPlayer.currentTime());
+                    });
+
+                    receiver.on('setCurrentTime', (value) => {
+                        vjsPlayer.currentTime(value);
+                    });
+
+                    receiver.on('getDuration', (callback) => {
+                        callback(vjsPlayer.duration());
+                    });
+
+                    receiver.on('getVolume', (callback) => {
+                        callback(vjsPlayer.volume() * 100);
+                    });
+
+                    receiver.on('setVolume', (value) => {
+                        vjsPlayer.volume(value / 100);
+                    });
+
+                    receiver.on('mute', () => {
+                        vjsPlayer.muted(true);
+                    });
+
+                    receiver.on('unmute', () => {
+                        vjsPlayer.muted(false);
+                    });
+
+                    receiver.on('getMuted', (callback) => {
+                        callback(vjsPlayer.muted());
+                    });
+
+                    receiver.on('getLoop', (callback) => {
+                        callback(vjsPlayer.loop());
+                    });
+
+                    receiver.on('setLoop', (value) => {
+                        vjsPlayer.loop(value);
+                    });
+
+                    // Set up video event listeners
+                    vjsPlayer.on('play', () => {
+                        receiver.emit('play');
+                    });
+
+                    vjsPlayer.on('pause', () => {
+                        receiver.emit('pause');
+                    });
+
+                    vjsPlayer.on('timeupdate', () => {
+                        receiver.emit('timeupdate', {
+                            seconds: vjsPlayer.currentTime(),
+                            duration: vjsPlayer.duration()
+                        });
+                    });
+
+                    vjsPlayer.on('ended', () => {
+                        receiver.emit('ended');
+                    });
+
+                    // Initialize the receiver
+                    receiver.ready();
+                }
+            });
+
+            
+            player.introOutroVideo({
+                intro_video: '',
+                                                intro_skippable: false,
+                                                outro_skippable: false
+                            });
+
+            player.currentTime(t);
+
+            // Add background audio track if exists
+            
+            if (document.querySelector('.end-thumbnail')) {
+                document.querySelector('.end-thumbnail').addEventListener('click', () => {
+                    player.currentTime(0)
+                    document.querySelector('.end-thumbnail')?.classList.remove('visible')
+                    player.play()
+                })
+            }
+
+            if ('0' === '1') {
+                const passwordForm = document.getElementById('password-form');
+                const token = localStorage.getItem('video_access_token_48864');
+
+                if (token) {
+                    fetch('https://app.vidzflow.com/videos/48864/check-token?token=' + token, {
+                        method: 'GET',
+                        credentials: 'include'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.valid) {
+                                passwordForm.style.display = 'none';
+                                player.show();
+                            } else {
+                                localStorage.removeItem('video_access_token_48864');
+                                player.hide();
+                                passwordForm.style.display = 'flex';
+                            }
+                        })
+                        .catch(error => {
+                            player.hide();
+                            passwordForm.style.display = 'flex';
+                        });
+                } else {
+                    player.hide();
+                    passwordForm.style.display = 'flex';
+                }
+            } else {
+                player.show();
+            }
+
+            // Function to show/hide play buttons based on player state, controls, and form visibility
+            function updatePlayButtons() {
+                const isPlaying = !player.paused();
+                const isMobile = window.innerWidth <= 767; // Define mobile breakpoint
+                const isFormVisible = document.querySelector('.video-form') && document.querySelector('.video-form')
+                    .style.display !== 'none';
+
+                // Update default big play button
+                const bigPlayButton = player.el().querySelector('.vjs-big-play-button');
+                if (bigPlayButton) {
+                    bigPlayButton.style.display =
+                        'none'; // Always hide the default big play button if custom buttons are set
+                }
+
+                const hasCustomButton = typeof customButtonWrapper !== 'undefined';
+                const hasCustomMobileButton = typeof customMobileButtonWrapper !== 'undefined';
+
+                if (hasCustomButton && hasCustomMobileButton) {
+                    // Both custom buttons are present
+                    customButtonWrapper.style.display = isPlaying || isMobile || isFormVisible ? 'none' : 'flex';
+                    customMobileButtonWrapper.style.display = isPlaying || !isMobile || isFormVisible ? 'none' :
+                        'flex';
+                } else if (hasCustomButton) {
+                    // Only desktop custom button is present
+                    customButtonWrapper.style.display = isPlaying || isFormVisible ? 'none' : 'flex';
+                } else if (hasCustomMobileButton) {
+                    // Only mobile custom button is present
+                    customMobileButtonWrapper.style.display = isPlaying || isFormVisible ? 'none' : 'flex';
+                } else if (bigPlayButton) {
+                    // No custom buttons, show default big play button
+                    bigPlayButton.style.display = isPlaying ? 'none' : 'block';
+                }
+
+                const playTextElement = document.querySelector('.custom-play-text');
+                if (playTextElement) {
+                    const showPlayText = !isPlaying && typeof customButtonWrapper === 'undefined' && typeof customMobileButtonWrapper === 'undefined';
+                    playTextElement.style.display = showPlayText ? 'block' : 'none';
+                }
+            }
+
+            
+            
+            
+            
+            // Show/hide CTA based on video time
+            player.on('timeupdate', () => {
+
+                
+                            });
+
+            
+            
+
+            player.on('fullscreenchange', function () {
+                if (player.isFullscreen() && options.playFromStartFullscreen) {
+                    player.currentTime(0);
+                }
+            });
+
+            
+            // Add custom play button if specified
+            
+            // Add custom mobile play button if specified
+            
+            
+            // Update play buttons on play and pause events
+            player.on('play', updatePlayButtons);
+            player.on('pause', updatePlayButtons);
+
+            // Initial update of play buttons
+            updatePlayButtons();
+
+            // Add a resize event listener to handle responsive behavior
+            window.addEventListener('resize', updatePlayButtons);
+
+            // Add an event listener to update play buttons when the form is shown/hidden
+            const observer = new MutationObserver(updatePlayButtons);
+            const formElement = document.querySelector('.video-form');
+            if (formElement) {
+                observer.observe(formElement, {
+                    attributes: true,
+                    attributeFilter: ['style']
+                });
+            }
+
+            // Handle messages from parent window
+            window.addEventListener('message', ({
+                data
+            }) => {
+                const eventType = typeof data === 'string' ? data : data.type;
+
+                switch (eventType) {
+                    case 'playerPlay':
+                        player.play();
+                        break;
+                    case 'playerPause':
+                        player.pause();
+                        break;
+                    case 'playerStop':
+                        player.hasStarted(false);
+                        player.currentTime(0);
+                        player.pause();
+                        break;
+                    case 'playerMute':
+                        player.volume(0);
+                        break;
+                    case 'playerUnmute':
+                        player.volume(1);
+                        break;
+                    case 'playerFullscreen':
+                        player.requestFullscreen();
+                        break;
+                    case 'playerExitFullscreen':
+                        player.exitFullscreen();
+                        break;
+                    case 'playerSeek':
+                        if (data.time !== undefined) {
+                            player.currentTime(data.time);
+                        }
+                        break;
+                    case 'playerVolume':
+                        if (data.volume !== undefined) {
+                            player.volume(data.volume);
+                        }
+                        break;
+                    default:
+                        console.warn('Unknown event type:', eventType);
+                }
+            });
+
+            // Add chapter markers if chapters are defined
+            var chapters = 
+
+            player.on("loadedmetadata", function () {
+                // Remove any existing chapter markers before adding new ones
+                var existingMarkers = document.querySelectorAll(".vjs-chapter-marker");
+                existingMarkers.forEach(function(marker) {
+                    marker.remove();
+                });
+
+                if (chapters && chapters.length > 0) {
+                    var total = player.duration();
+                    var progressHolder = document.querySelector(
+                        ".video-js .vjs-progress-control .vjs-progress-holder");
+
+                    if (!progressHolder) {
+                        return;
+                    }
+
+                    // Create and append each chapter marker
+                    chapters.forEach(function(chapter, index) {
+                        var start = chapter.start;
+                        var end = Math.min(chapter.end, total);
+                        var left = (start / total * 100) + '%';
+                        var width = ((end - start) / total * 100) + '%';
+
+                        var el = document.createElement("div");
+                        el.classList.add("vjs-chapter-marker");
+                        el.style.left = left;
+                        el.style.width = width;
+
+                        // Create tooltip with the new class name
+                        var tooltip = document.createElement("div");
+                        tooltip.classList.add("chapter-tooltip");
+                        tooltip.textContent = chapter.label;
+                        el.appendChild(tooltip);
+
+                        progressHolder.appendChild(el);
+                    });
+
+                    // Add a resize handler to ensure chapter markers remain correct when player size changes
+                    var resizeObserver = new ResizeObserver(function() {
+                        // Force a recalculation of positions by toggling a class
+                        progressHolder.classList.add("recalculating");
+                        setTimeout(function() {
+                            progressHolder.classList.remove("recalculating");
+                        }, 50);
+                    });
+
+                    resizeObserver.observe(player.el_);
+                }
+            });
+            // ============================================================
+            // postMessage events for parent windows embedding the iframe.
+            // Every message has the shape:
+            //   { source: 'vidzflow', eventType: '...', videoId, ...payload }
+            // See VIDEO_PLAYER_EVENTS.md in the project root for the full
+            // listener documentation.
+            // ============================================================
+            const VIDZFLOW_VIDEO_ID = 48864;
+            const VIDZFLOW_VIDEO_TITLE = "RRE 2";
+
+            // Centralized emitter so every event uses the same envelope.
+            function emitPlayerEvent(eventType, data = {}) {
+                // Nothing to notify when the player isn't embedded in an iframe.
+                if (window.parent === window) {
+                    return;
+                }
+
+                window.parent.postMessage(Object.assign({
+                    source: 'vidzflow',
+                    eventType: eventType,
+                    videoId: VIDZFLOW_VIDEO_ID,
+                    videoTitle: VIDZFLOW_VIDEO_TITLE,
+                }, data), '*');
+            }
+
+            // Notify parent window when video is ready
+            player.ready(function () {
+                emitPlayerEvent('videoReady', {
+                    duration: player.duration() || 0,
+                });
+            });
+
+            // Emit play / pause / seeking / volume / fullscreen / error events.
+            player.on('play', function () {
+                emitPlayerEvent('videoPlay', {
+                    currentTime: player.currentTime(),
+                    duration: player.duration() || 0,
+                });
+            });
+
+            player.on('pause', function () {
+                // VideoJS also fires 'pause' immediately before 'ended'; skip that
+                // case so listeners get a clean ended event instead.
+                if (player.ended()) {
+                    return;
+                }
+
+                emitPlayerEvent('videoPause', {
+                    currentTime: player.currentTime(),
+                    duration: player.duration() || 0,
+                });
+            });
+
+            // Throttle timeupdate to roughly one message per second. VideoJS fires
+            // 'timeupdate' ~4x/second which is too chatty for a postMessage stream.
+            let lastEmittedSecond = -1;
+            player.on('timeupdate', function () {
+                if (player.paused() || player.seeking()) {
+                    return;
+                }
+
+                const currentSecond = Math.floor(player.currentTime());
+                if (currentSecond === lastEmittedSecond) {
+                    return;
+                }
+                lastEmittedSecond = currentSecond;
+
+                const duration = player.duration() || 0;
+
+                // Plain playback position in seconds.
+                emitPlayerEvent('videoTimeUpdate', {
+                    currentTime: player.currentTime(),
+                });
+
+                // Progress as a percentage, emitted separately.
+                emitPlayerEvent('videoProgress', {
+                    currentTime: player.currentTime(),
+                    duration: duration,
+                    percent: duration ? (player.currentTime() / duration) * 100 : 0,
+                });
+            });
+
+            // Reset the throttle when the user seeks so the next second emits.
+            player.on('seeked', function () {
+                lastEmittedSecond = -1;
+                emitPlayerEvent('videoSeeked', {
+                    currentTime: player.currentTime(),
+                    duration: player.duration() || 0,
+                });
+            });
+
+            player.on('volumechange', function () {
+                emitPlayerEvent('videoVolumeChange', {
+                    volume: player.volume(),
+                    muted: player.muted(),
+                });
+            });
+
+            player.on('fullscreenchange', function () {
+                emitPlayerEvent('videoFullscreenChange', {
+                    isFullscreen: player.isFullscreen(),
+                });
+            });
+
+            player.on('error', function () {
+                const error = player.error();
+                emitPlayerEvent('videoError', {
+                    code: error ? error.code : null,
+                    message: error ? error.message : 'Unknown player error',
+                });
+            });
+
+            // Show form on video end if configured
+            
+            // Analytics collection
+            
+            player.on('ended', () => {
+                document.querySelector('.end-thumbnail')?.classList.add('visible')
+                lastEmittedSecond = -1;
+                emitPlayerEvent('videoEnded', {
+                    duration: player.duration() || 0,
+                })
+            })
+
+            player.on('loadedmetadata', function () { });
+        })
+    </script>
+
+    <link href="../css/modern-normalize.min.css" rel="stylesheet">
+    </link>
+
+    <title>RRE 2</title>
+    <meta name="title" content="RRE 2">
+    <meta name="description" content="">
+
+    <meta property="og:type" content="video">
+    <meta property="og:title" content="RRE 2">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="../video/thumbnail.jpg">
+
+    <meta property="twitter:title" content="RRE 2">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="../video/thumbnail.jpg">
+
+    <!-- oEmbed Discovery -->
+    <link rel="alternate" type="application/json+oembed"
+        href="https://app.vidzflow.com/oembed?url=https%3A%2F%2Fapp.vidzflow.com%2Fv%2FtU86pvvwPo&format=json"
+        title="RRE 2">
+    <link rel="alternate" type="text/xml+oembed"
+        href="https://app.vidzflow.com/oembed?url=https%3A%2F%2Fapp.vidzflow.com%2Fv%2FtU86pvvwPo&format=xml"
+        title="RRE 2">
+</head>
+
+<body class="aspect-ratio-1.77272727 player-container">
+    
+                    <video-js id="vidzflow-player" class="video-js"  playsinline  oncontextmenu="return false;" poster="../video/thumbnail.jpg" disableRemotePlayback>
+
+                                                        <source src="../video/rre-bg-576p.mp4" type="video/mp4"
+                            size="576" label="576p" >
+                                                        <source src="../video/rre-bg.mp4"  type="video/mp4" size="★" label="★" selected=true>
+                    
+        
+        
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">
+                supports HTML5 video
+            </a>
+        </p>
+    </video-js>
+</body>
+
+</html>
